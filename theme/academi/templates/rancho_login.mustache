@@ -1,0 +1,197 @@
+{{!
+    ----------------------------------------------------------------------------
+    Rancho Custom Login Template - Academi Theme
+    ----------------------------------------------------------------------------
+    NOTES:
+    - Moodle generates login errors internally.
+    - We keep Moodle's native output hidden and extract errors using JS.
+    - This avoids editing core renderers and is upgrade-safe.
+    ----------------------------------------------------------------------------
+}}
+
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+    {{> core/local/toast/wrapper}}
+
+    <div id="login-page-wrapper">
+
+        <div class="rancho-login-container">
+
+            <!-- BACK BUTTON -->
+            <div class="login-back-btn">
+                <a href="{{{domain}}}">
+                <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg"> <rect y="0.0917969" width="48" height="48" rx="24" fill="#CEDDE9"/> <path d="M14.5855 23.0215H35.9833C36.2671 23.0215 36.5392 23.1342 36.7399 23.3348C36.9405 23.5355 37.0532 23.8076 37.0532 24.0914C37.0532 24.3751 36.9405 24.6473 36.7399 24.8479C36.5392 25.0485 36.2671 25.1613 35.9833 25.1613H14.5855C14.3018 25.1613 14.0296 25.0485 13.829 24.8479C13.6283 24.6473 13.5156 24.3751 13.5156 24.0914C13.5156 23.8076 13.6283 23.5355 13.829 23.3348C14.0296 23.1342 14.3018 23.0215 14.5855 23.0215Z" fill="#20303E"/> <path d="M15.026 24.0919L23.8997 32.9634C24.1006 33.1643 24.2135 33.4368 24.2135 33.7209C24.2135 34.005 24.1006 34.2775 23.8997 34.4784C23.6988 34.6792 23.4263 34.7921 23.1422 34.7921C22.8581 34.7921 22.5856 34.6792 22.3847 34.4784L12.7557 24.8493C12.6561 24.75 12.577 24.6319 12.5231 24.5019C12.4692 24.3719 12.4414 24.2326 12.4414 24.0919C12.4414 23.9511 12.4692 23.8118 12.5231 23.6818C12.577 23.5518 12.6561 23.4338 12.7557 23.3344L22.3847 13.7054C22.5856 13.5045 22.8581 13.3916 23.1422 13.3916C23.4263 13.3916 23.6988 13.5045 23.8997 13.7054C24.1006 13.9063 24.2135 14.1787 24.2135 14.4628C24.2135 14.747 24.1006 15.0194 23.8997 15.2203L15.026 24.0919Z" fill="#20303E"/> 
+                </svg></a>
+            </div>
+
+            <!-- LOGIN FORM AREA -->
+            <div class="login-form-box">
+
+                <br/>
+
+                <!-- ============================================================
+                     MAIN LOGIN FORM
+                     ============================================================ -->
+                <form class="login-form"
+                      action="{{{domain}}}/login/index.php"
+                      method="post"
+                      id="login">
+
+                    <input type="hidden" name="anchor" value="">
+                    <input type="hidden" name="logintoken" value="{{ logintoken }}">
+
+                    <!-- USERNAME -->
+                    <div class="form-group">
+                        <label for="username" style="font-weight:600;">
+                            {{#str}} username {{/str}}
+                        </label>
+                        <input type="text"
+                               name="username"
+                               id="username"
+                               class="form-control"
+                               placeholder="eg. amit"
+                               required>
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+                        <label for="password" style="font-weight:600;">
+                            {{#str}} password {{/str}}
+                        </label>
+
+                        <div class="input-group">
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   class="form-control"
+                                   placeholder="Your password:"
+                                   required>
+
+                            <div class="input-group-append">
+                                <button type="button"
+                                        class="btn rancho-btn-eye"
+                                        id="togglePassword">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <a href="{{{ domain }}}/login/forgot_password.php"
+                           id="rancho_forgot_password"
+                           style="opacity:0.7;">
+                            Having trouble signing in?
+                        </a>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary btn-block"
+                            style="font-weight:600;">
+                        {{#str}} login {{/str}}
+                    </button>
+                </form>
+
+                <br/><br/>
+
+                <!-- ============================================================
+                     CUSTOM GUEST LOGIN
+                     IMPORTANT: unique form ID
+                     ============================================================ -->
+                <form action="{{{ domain }}}/login/index.php"
+                      method="post"
+                      id="guestloginform">
+
+                    <input type="hidden" name="anchor" value="">
+                    <input type="hidden" name="logintoken" value="{{ logintoken }}">
+                    <input type="hidden" name="username" value="guest_user">
+                    <input type="hidden" name="password" value="GuestUser@123">
+
+                    <p id="limited_access">Limited access to the courses</p>
+
+                    <button type="submit"
+                            class="guest-btn btn-block ff-raleway">
+                        Sign In as a guest
+                    </button>
+                </form>
+
+                <!-- Moodle default guest login -->
+                <form action="{{{ domain }}}/login/index.php"
+                      method="post"
+                      id="guestlogin"
+                      style="display:none;">
+
+                    <input type="hidden" name="logintoken" value="{{ logintoken }}">
+                    <input type="hidden" name="username" value="guest">
+                    <input type="hidden" name="password" value="guest">
+
+                    <button type="submit"
+                            class="btn btn-primary btn-block"
+                            id="loginguestbtn">
+                        Access as a guest
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE IMAGE -->
+        <div class="login-image-container">
+            <img src="https://ik.imagekit.io/036wrwwve/Moodle/Lms.webp?updatedAt=1725450469501"
+                 alt="LMS"/>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         HIDDEN MOODLE NATIVE LOGIN OUTPUT
+         Contains:
+         - error messages
+         - login notices
+         ============================================================ -->
+    <div id="moodle-login-hidden" style="display:none;">
+        {{{ output.main_content }}}
+    </div>
+
+    <!-- PASSWORD TOGGLE -->
+    <script>
+        const btn = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+
+        btn.addEventListener('click', () => {
+            passwordField.type =
+                passwordField.type === 'password' ? 'text' : 'password';
+        });
+    </script>
+
+</body>
+
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+    M.util.js_complete('theme_boost/loader');
+});
+
+require(['core_form/submit'], function(Submit) {
+    Submit.init("loginbtn");
+    Submit.init("loginguestbtn");
+});
+{{/js}}
+
+<!-- ============================================================
+     EXTRACT MOODLE ERROR + SHOW INSIDE CUSTOM UI
+     ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const hiddenContent = document.getElementById('moodle-login-hidden');
+    const error = hiddenContent?.querySelector('.alert-danger');
+
+    if (error) {
+        const container = document.querySelector('.login-form-box');
+
+        // Prevent duplicate insertion
+        if (!container.querySelector('.alert-danger')) {
+            container.prepend(error.cloneNode(true));
+        }
+    }
+});
+</script>

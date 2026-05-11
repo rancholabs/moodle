@@ -1,0 +1,117 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_academi/rancho_courses
+
+    TODO describe template rancho_courses
+
+    Example context (json):
+    {
+    }
+}}
+{{> theme_boost/head }}
+<body {{{ bodyattributes }}}>
+    <div id="courses-page-wrapper" class="d-print-block">
+        {{{ output.standard_top_of_body_html }}}
+        {{> theme_academi/header }}
+        <div id="page" data-region="mainpage" data-usertour="scroller">
+            <div class="banner">
+                <img src="https://ilms-public.s3.ap-south-1.amazonaws.com/ilms-static-content/core-images/Banner+(Course+Page).svg" alt="Banner Image">
+                <div class="banner-content">
+                    <h1>My Courses</h1>
+                    <p>Keep Learnng, Keep Growing</p>
+                </div>
+            </div>        
+  <span style="display: none">{{{ output.main_content }}}</span>
+        <div id="rancho_course_container" class="rancho_course_container" style="padding-top: 32px;">
+        {{#coursepairs}}
+                <div id="page-content" class="pb-3 d-print-block" style="margin-bottom: 16px;">
+                <div class="p-3 rounded" style="background-color: #F2F5FF;">
+                
+                    <div class="shadow rounded pb-3 bg-white">                        
+                        <div class="mb-2 mx-3" style="border-radius: 0 0 5px 5px; width:fit-content; font-size: 14px; font-weight: 700; color: white; background-color: #233060; padding: 0.25rem 0.5rem;">
+                            {{ course.shortname }}
+                        </div>
+                            <div>
+                                {{! <div class="rancho_course-card-link">}}
+                                <div class="m-4">                                       
+                                    {{! <div class="course-card-content" style="display:flex; justify-content: space-between; width: 100%;"> }}
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between w-100%">
+                                        <div style="width: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                                           
+                                            <p style="width: fit-content; padding: 6px 12px; font-size: 10px; font-weight: 700; background:#B6F1C4; color:#23943F; border-radius: 37px; leading-trim: both; line-height: 120%; text-edge: cap; margin-bottom: 8px; ">{{ subject }}</p>            
+                                            <p class="d-none d-sm-block" style="font-size: 20px; font-weight: 600; color: #607C97; margin: 0px;">{{ course_description }}</p>
+                                            <p class="d-block d-sm-none" style="font-size: 16px; font-weight: 600; color: #607C97; margin: 0px;">Know all about the exciting world of robotics and coding!</p>
+                                        </div>                                                                                 
+                                    </div>
+                                </div>
+                            </div>
+                        {{! <div style="padding: 16px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; height: 168px;"> }}
+                        {{! <div class="custom-course-display"> }}
+                        <div class="mx-3 d-flex flex-column gap-2 flex-sm-row ">
+                                {{#course.id}}
+                                    <a class="m-1 learn-link link-text-decoration-disabled" href="/course/view.php?id={{course.id}}" style="height: 120px;">
+                                        <div>
+                                            Learn
+                                        </div>
+                                    </a>
+                                    <a class="m-1 build-link link-text-decoration-disabled" href="/course/view.php?id={{course.id}}" style="height: 120px;">
+                                        <div>
+                                            Build
+                                        </div>
+                                    </a>
+                                    <a class="m-1 compete-link link-text-decoration-disabled" href="/course/view.php?id={{course.id}}" style="height: 120px;">
+                                        <div>
+                                            Compete
+                                        </div>
+                                    </a>
+                                {{/course.id}}
+                                {{! {{#build.id }}
+                                    {{! <a class="m-1 build-link link-text-decoration-disabled" href="/course/view.php?id={{build.id}} {{!" style="height: 120px;"> }}
+                                        {{! <div>
+                                            Build
+                                        </div> }}
+                                    {{! </a> }}
+                                {{! {{/build.id}}
+                                {{! {{#compete.id}}
+                                    {{! <a class="m-1 compete-link link-text-decoration-disabled" href="/course/view.php?id={{compete.id}} {{!" style="height: 120px;"> }}
+                                        {{! <div>
+                                            Compete
+                                        </div> }}
+                                    {{! </a> }}
+                                {{! {{/compete.id}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/coursepairs}}
+            {{! ----------------- previous courses }}
+            <div>
+                <div class="p-3 rounded" style="background-color: #F2F5FF; margin-top: 32px;">
+                    {{! <div id="region-main-box" class="rancho_inner_container empty-container"> }}
+                    <div id="region-main-box" class="bg-white rounded px-3 pb-3">
+                        <div class="mb-3" style="border-radius: 0 0 5px 5px; width:fit-content; font-size: 14px; font-weight: 700; color: white; background-color: #233060; padding: 0.25rem 0.5rem;">
+                            PREVIOUS COURSE
+                        </div>
+                        <div style="display: flex; padding: 24px 10px; justify-content: center; align-items: center; gap: 10px; align-self: stretch; border-radius: 8px; background: #EBF1F4; font-size: 16px; font-weight: 600; ">NO COURSE TO DISPLAY  :&#40;</div>
+                    </div>
+                </div>
+            <span style="display:none"> {{> theme_academi/footer }}</span>
+            </div>
+        </div>
+    </div>
+</body>

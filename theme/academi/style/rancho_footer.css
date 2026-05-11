@@ -1,0 +1,28 @@
+.link-text-decoration-disabled:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10%;
+}
+
+@media (max-width: 768px) {
+    .footer-main {
+        gap: 32px;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "second"
+            "first";
+    }
+
+    .footer-item:first-child {
+        grid-area: second;
+    }
+
+    .footer-item:last-child {
+        grid-area: first;
+    }
+}
