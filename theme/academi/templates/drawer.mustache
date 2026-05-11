@@ -1,0 +1,67 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_academi/drawer
+
+    Example context (json):
+    {
+        "drawerclasses": "drawer drawer-right",
+        "drawertrigger": "toggleblocks",
+        "tooltipplacement": "right",
+        "drawerconent": "Content for the blocks region",
+        "closebuttontext": "Close drawer"
+    }
+}}
+<div {{!
+    }} class="{{$drawerclasses}}{{/drawerclasses}} d-print-none not-initialized"{{!
+    }} data-region="fixed-drawer"{{!
+    }} id="{{$id}}{{/id}}"{{!
+    }} data-preference="{{$drawerpreferencename}}{{/drawerpreferencename}}"{{!
+    }} data-state="{{$drawerstate}}{{/drawerstate}}"{{!
+    }} data-forceopen="{{$forceopen}}0{{/forceopen}}"{{!
+    }} data-close-on-resize="{{$drawercloseonresize}}0{{/drawercloseonresize}}"{{!
+    }}>
+    <div class="drawerheader">
+        <button
+            class="icon-no-margin hidden"
+            style="padding: 4px 8px; margin-left: 8px; margin-right: auto; border-radius: 5px;"
+            data-toggler="drawers"
+            data-action="closedrawer"
+            data-target="{{$id}}{{/id}}"
+            data-toggle="tooltip"
+            data-placement="{{$tooltipplacement}}right{{/tooltipplacement}}"
+            title="{{$closebuttontext}}{{#str}}closedrawer, core{{/str}}{{/closebuttontext}}"
+        >
+<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.8125 3H4.8125C3.70793 3 2.8125 3.89543 2.8125 5V19C2.8125 20.1046 3.70793 21 4.8125 21H20.8125C21.9171 21 22.8125 20.1046 22.8125 19V5C22.8125 3.89543 21.9171 3 20.8125 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.8125 3V21" stroke="white" stroke-width="2"/>
+</svg>
+
+
+        </button>
+        {{$drawerheading}}{{/drawerheading}}
+        <div class="drawerheadercontent hidden">
+            {{$drawerheadercontent}}{{/drawerheadercontent}}
+        </div>
+    </div>
+    <div class="drawercontent drag-container" data-usertour="scroller">
+        {{$drawercontent}}{{/drawercontent}}
+    </div>
+</div>
+{{#js}}
+require(['theme_boost/drawers']);
+{{/js}}

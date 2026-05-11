@@ -1,0 +1,137 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_compete/events_card
+
+    TODO describe template events_card
+
+    Example context (json):
+    {
+        "events": [
+            {
+                "title": "Codeathon Challenge",
+                "date": "September 15th, 2024",
+                "location": "Amity International School, Noida",
+                "image": "path/to/event1-image.jpg", // Optional event image
+                "details": "Join us for an exciting day of coding, problem-solving, and innovation... ", // More details to be shown on expand
+                "registrationLink": "#", // Optional registration link
+                "brochureLink": "#" // Optional brochure download link
+            },
+            // ... more event data
+        ]
+    }
+}}
+
+<div style="display: flex; flex-direction: column; gap: 24px;" class="accordion" id="eventsAccordion">
+{{#events}}
+    <div class="card" style="border: 2px solid #989DB2; border-radius: 5px; background-color: #E9EBF4;">
+        <div class="card-header" id="heading{{index}}" style="border: none;">
+            <h2 class="mb-0">
+                <div class="text-left collapsed" style="font-weight: 800; font-size: 24px;">
+                    {{title}}
+                </div>
+                <p id="date-{{index}}" class="event-date" style="font-size: 16px; padding: 8px; background-color: #F7F8F9; margin-top: 12px; border-radius: 3px;">
+                    <i class="fa fa-calendar"></i> {{date}}
+                </p>
+            </h2>
+        </div>
+
+        <div id="collapse{{index}}" class="collapse" aria-labelledby="heading{{index}}" data-parent="#eventsAccordion">
+            <div class="card-body" style="display:flex; gap: 32px;">
+                <div>
+                    {{#image}}
+                        <img src="{{image}}" width="507" height="257"/> 
+                    {{/image}}
+                    <p class="event-date" style="padding-top: 8px;"><i class="fa fa-calendar"></i> {{date}}</p>
+                    <p class="event-location" style="padding-top: 4px;"><i class="fa fa-map-marker"></i> {{location}}</p>
+                </div>
+                <div >
+                    <p style="margin-bottom: 16px;">{{details}}</p>
+                    <div style="display:flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                        <p style="font-weight: 700">Include events</p>
+                        <p class="event-location">🤖 Robo Soccer</p>
+                        <p class="event-location">💡 Innovation Extravaganza</p>
+                        <p class="event-location">🚁 Sky Surge (Drone Race)</p>
+                        <p class="event-location">⚙ Line Follower Race</p>
+                    </div>
+                    <div style="display:flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                        <p style="font-weight: 700">Rewards</p>
+                        <p class="event-location">💰 Prizes: Total cash prize pool of ₹12,000!</p>
+                        <p class="event-location">🎁 Cool Giveaways throughout the event!</p>
+                    </div>
+                    <p>Join us for a day of creativity and excitement at TINKERFEST'24 🚀</p>
+                    <div class="event-actions">
+                        {{#registrationLink}}
+                            <a href="{{registrationLink}}" class="btn btn-primary">Register Now!</a>
+                        {{/registrationLink}}
+                        {{#brochureLink}}
+                            <a href="{{brochureLink}}" class="btn"><button class="guest-btn btn-block ff-raleway" style="padding: 6px 10px;">Download Brochure</button></a>
+                        {{/brochureLink}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; padding: 8px;" id="button-{{index}}" class="toggle-button text-center" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="false" aria-controls="collapse{{index}}">
+                CLICK TO EXPAND<i class="fas fa-chevron-down"></i> 
+            </div>
+        </div>
+    </div>
+{{/events}}
+</div>
+
+<script>
+    window.onload = function() {
+        // Function to update button text, icon, and date visibility
+        function updateButton(button, isExpanded) {
+            const index = button.id.split('-')[1];
+            const dateEle = document.getElementById(`date-${index}`);
+            const icon = button.querySelector('i');
+
+            if (isExpanded) {
+                button.textContent = "CLICK TO CLOSE";
+                button.appendChild(icon);
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+                if (dateEle) dateEle.style.display = 'none'; // Hide the date element
+            } else {
+                button.textContent = "CLICK TO EXPAND";
+                button.appendChild(icon);
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+                if (dateEle) dateEle.style.display = 'block'; // Show the date element
+            }
+        }
+
+        // Attach event listeners to each collapse element
+        document.querySelectorAll('.collapse').forEach(collapseElement => {
+            const index = collapseElement.id.replace('collapse', '');
+            const button = document.getElementById(`button-${index}`);
+            const dateEle = document.getElementById(`date-${index}`);
+
+            if (button && dateEle) {
+                $(collapseElement).on('show.bs.collapse', () => {
+                    updateButton(button, true);
+                });
+
+                $(collapseElement).on('hide.bs.collapse', () => {
+                    updateButton(button, false);
+                });
+            }
+        });
+    };
+</script>

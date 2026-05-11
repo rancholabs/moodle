@@ -1,0 +1,78 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_academi/try_demo
+
+    TODO describe template try_demo
+
+    Example context (json):
+    {
+    }
+}}
+
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+    {{> core/local/toast/wrapper}}
+
+<form action="{{{ domain }}}/login/index.php" method="post" id="login">
+    <input id="anchor" type="hidden" name="anchor" value="">
+    <input type="hidden" name="logintoken" value="{{{ logintoken }}}">
+    <input type="hidden" name="username" value="guest_user">
+    <input type="hidden" name="password" value="GuestUser@123">
+    <button type="submit" class="btn btn-primary btn-block">Try Demo</button>
+</form>   
+
+</body >
+
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+  M.util.js_complete('theme_boost/loader');
+});
+
+    {{^error}}
+        {{#autofocusform}}
+            require(['core_form/events'], function(FormEvent) {
+                function autoFocus() {
+                    const userNameField = document.getElementById('username');
+                    if (userNameField.value.length == 0) {
+                        userNameField.focus();
+                    } else {
+                        document.getElementById('password').focus();
+                    }
+                }
+                autoFocus();
+                window.addEventListener(FormEvent.eventTypes.fieldStructureChanged, autoFocus);
+            });
+        {{/autofocusform}}
+    {{/error}}
+    {{#error}}
+        document.getElementById('loginerrormessage').focus();
+    {{/error}}
+    {{#togglepassword}}
+        require(['core/togglesensitive'], function(ToggleSensitive) {
+            ToggleSensitive.init("password", {{smallscreensonly}});
+        });
+    {{/togglepassword}}
+    require(['core_form/submit'], function(Submit) {
+        Submit.init("loginbtn");
+        {{#canloginasguest}}
+            Submit.init("loginguestbtn");
+        {{/canloginasguest}}
+    });
+{{/js}}

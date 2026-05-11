@@ -1,0 +1,80 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_academi/stories-carousel
+
+    TODO describe template stories-carousel
+
+    Example context (json):
+    {
+    }
+}}
+
+<div id="carouselExample" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner" style="width: 100%; padding:0px 24px 24px 24px;">
+    {{#stories}}
+      <div class="carousel-item {{#first}}active{{/first}}" style="background: white;">
+        <div class="group relative rounded-md shadow-sm overflow-hidden ff-open-sans" style="width: fit-content; max-width:320px; max-height: 360px; margin: 0px auto;" >
+          <img
+            class="object-cover rounded-md"
+            src="{{imageUri}}"
+            alt="story-pic"
+            style="max-width: 320px" />
+          <div class="absolute bg-white w-full bottom-0 left-0 z-10 p-[16px] h-[100px] group-hover:h-full transition-all duration-500 ease-in-out overflow-hidden">
+            <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div class="flex gap-4 items-center mb-4">
+                  <img
+                    class="hidden group-hover:flex h-0 w-[50px] group-hover:h-[50px] rounded-[50%] transition-all duration-700 ease-in-out"
+                    src="{{imageUri}}"
+                    alt="story-pic" />
+                  <div>
+                    <h1 class="text-primary-text-color font-[700] leading-[24px]" style="font-size: 16px;">{{student.name}}, {{student.class}}-{{student.section}}</h1>
+                    <p class="text-[#8A96A9] font-[400] leading-[24px]" style="font-size: 12px;">{{achievement}}</p>
+                  </div>
+                </div>
+                <div class="hidden group-hover:flex flex-col transition-all duration-700 ease-in-out">
+                  <h2 class="text-primary-text-color font-[700] leading-[20px]">{{description}}</h2>
+                </div>
+              </div>
+              <div class="flex gap-4 mt-16">
+                {{#badges}}
+                  <div class="relative group/child w-fit">
+                    <img
+                      class="hidden group-hover:flex h-0 w-[50px] group-hover:h-[50px] rounded-[50%] transition-all duration-700 ease-in-out"
+                      src="https://img.pikbest.com/origin/09/35/50/10NpIkbEsTxKi.png!w700wp"
+                      alt="{{title}}" />
+                    <div
+                      class="absolute hidden group-hover/child:flex text-nowrap -top-8 left-0 w-fit bg-gray-800 text-white text-center text-sm p-2">{{title}}</div>
+                  </div>
+                {{/badges}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/stories}}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+    <span  aria-hidden="true" style="width:24px; height: 24px; border-radius: 8%; background-color: rgba(0,0,0,0.6);"><i class="fa-solid fa-angle-left"></i></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+    <span aria-hidden="true" style="width:24px; height: 24px; border-radius: 8%; background-color: rgba(0,0,0,0.6);"><i class="fa-solid fa-angle-right"></i></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

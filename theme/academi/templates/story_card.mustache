@@ -1,0 +1,47 @@
+{{#stories}}
+    <div 
+        style="position: relative; max-width: 402px; max-height: 480px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden; font-family: 'Open Sans', sans-serif;" 
+        onmouseover="this.querySelector('.hover-content').style.height = '100%'; this.querySelector('.hover-img').style.height = '80px'; this.querySelector('.hover-details').style.display = 'flex'; this.querySelectorAll('.hover-badge-img').forEach(img => img.style.height = '50px'); this.querySelectorAll('.hover-badge-tooltip').forEach(tooltip => tooltip.style.display = 'flex');"
+        onmouseout="this.querySelector('.hover-content').style.height = '100px'; this.querySelector('.hover-img').style.height = '0'; this.querySelector('.hover-details').style.display = 'none'; this.querySelectorAll('.hover-badge-img').forEach(img => img.style.height = '0'); this.querySelectorAll('.hover-badge-tooltip').forEach(tooltip => tooltip.style.display = 'none');"
+    >
+        <img
+            style="display: block; max-width: 402px; height: 300px; object-fit: contain; border-radius: 8px;"
+            src="{{imageUri}}"
+            alt="story-pic" />
+        <div class="hover-content" style="position: absolute; background-color: white; width: 100%; bottom: 0; left: 0; z-index: 10; padding: 16px; height: 100px; transition: all 0.5s ease-in-out; overflow: hidden;">
+            <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; gap: 16px; align-items: top; margin-bottom: 16px;">
+                        <img
+                            class="hover-img"
+                            style="display: flex; height: 0; width: 80px; border-radius: 50%; transition: all 0.7s ease-in-out;"
+                            src="{{imageUri}}"
+                            alt="story-pic" />
+                        <div>
+                            <h1 style="color: #333333; font-size: 20px; font-weight: 700; line-height: 24px;">{{student.name}},
+                                {{student.class}}-{{student.section}}</h1>
+                            <p style="color: #8A96A9; font-size: 20px; font-weight: 400; line-height: 24px;">{{achievement}}</p>
+                        </div>
+                    </div>
+                    <div class="hover-details" style="display: none; flex-direction: column; transition: all 0.7s ease-in-out;">
+                        <h2 style="color: #333333; font-weight: 700; line-height: 24px;">{{description}}</h2>
+                    </div>
+                </div>
+                <div style="display: none; gap: 16px; margin-top: 64px;">
+                    {{#badges}}
+                        <div style="position: relative; width: fit-content;">
+                            <img
+                                class="hover-badge-img"
+                                style="display: flex; height: 0; width: 50px; border-radius: 50%; transition: all 0.7s ease-in-out;"
+                                src="https://img.pikbest.com/origin/09/35/50/10NpIkbEsTxKi.png!w700wp"
+                                alt="school logo" />
+                            <div 
+                                class="hover-badge-tooltip"
+                                style="position: absolute; display: none; text-align: center; white-space: nowrap; top: -32px; left: 0; width: fit-content; background-color: #2d3748; color: white; font-size: 14px; padding: 8px;">{{achievement}}</div>
+                        </div>
+                    {{/badges}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{/stories}}
